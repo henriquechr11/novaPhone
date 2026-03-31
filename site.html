@@ -1,0 +1,1235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>NovaPhone X — Redefinindo o Possível</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+<style>
+:root {
+  --bg: #0a0f1e;
+  --bg2: #0d1a2e;
+  --bg3: #0a1628;
+  --accent: #2a6ef5;
+  --accent-glow: rgba(42,110,245,0.35);
+  --text: #f0f4ff;
+  --muted: #7a8aa0;
+  --border: rgba(255,255,255,0.08);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  overflow-x: hidden;
+  cursor: none;
+}
+
+/* CUSTOM CURSOR */
+#cursor {
+  width: 12px; height: 12px;
+  border-radius: 50%;
+  background: var(--accent);
+  position: fixed; top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: screen;
+  transition: transform 0.15s ease;
+}
+#cursor-ring {
+  width: 40px; height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(42,110,245,0.5);
+  position: fixed; top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9998;
+  transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
+}
+
+/* AGEGATE */
+#agegate {
+  position: fixed; inset: 0;
+  background: radial-gradient(ellipse at center, #0d1a2e 0%, #0a0f1e 100%);
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  z-index: 1000;
+  gap: 2rem;
+}
+#agegate .logo-ag {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 900;
+  letter-spacing: -2px;
+  background: linear-gradient(135deg, #f0f4ff, var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+#agegate p {
+  color: var(--muted);
+  font-size: 0.9rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  text-align: center;
+  max-width: 360px;
+  line-height: 1.8;
+}
+#agegate input {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1.1rem;
+  letter-spacing: 0.2em;
+  padding: 1rem 1.5rem;
+  text-align: center;
+  width: 240px;
+  outline: none;
+  transition: border-color 0.3s;
+}
+#agegate input:focus { border-color: var(--accent); }
+#agegate input::placeholder { color: rgba(255,255,255,0.2); letter-spacing: 0.3em; }
+.btn-enter {
+  background: var(--accent);
+  border: none; border-radius: 50px;
+  color: #fff;
+  cursor: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.85rem;
+  font-weight: 500;
+  letter-spacing: 0.15em;
+  padding: 0.9rem 2.5rem;
+  text-transform: uppercase;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.btn-enter:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 40px var(--accent-glow);
+}
+.ag-grid {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(42,110,245,0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(42,110,245,0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+  pointer-events: none;
+}
+
+/* MAIN SITE */
+#site { opacity: 0; }
+
+/* NAV */
+nav {
+  position: fixed; top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 1.5rem 4%;
+  display: flex; align-items: center; justify-content: space-between;
+  backdrop-filter: blur(20px);
+  background: rgba(10,15,30,0.7);
+  border-bottom: 1px solid var(--border);
+}
+.logo {
+  font-family: 'Playfair Display', serif;
+  font-weight: 900;
+  font-size: 1.4rem;
+  letter-spacing: -1px;
+  background: linear-gradient(135deg, #f0f4ff 40%, var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+nav ul {
+  list-style: none;
+  display: flex;
+  gap: 2.5rem;
+}
+nav ul a {
+  color: var(--muted);
+  font-size: 0.85rem;
+  letter-spacing: 0.1em;
+  text-decoration: none;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+nav ul a:hover { color: var(--text); }
+.nav-cta {
+  background: transparent;
+  border: 1px solid rgba(42,110,245,0.5);
+  border-radius: 50px;
+  color: var(--accent) !important;
+  padding: 0.5rem 1.5rem;
+  transition: background 0.3s, box-shadow 0.3s !important;
+}
+.nav-cta:hover {
+  background: rgba(42,110,245,0.1) !important;
+  box-shadow: 0 0 20px var(--accent-glow);
+}
+
+/* HERO */
+#hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  position: relative;
+  overflow: hidden;
+  padding-top: 80px;
+}
+.hero-bg-glow {
+  position: absolute;
+  width: 800px; height: 800px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(42,110,245,0.12) 0%, transparent 70%);
+  pointer-events: none;
+  top: 50%; left: 50%;
+  transform: translate(-50%, -50%);
+}
+.hero-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(3rem, 8vw, 7rem);
+  font-weight: 900;
+  line-height: 1;
+  text-align: center;
+  letter-spacing: -3px;
+  position: relative; z-index: 2;
+  overflow: hidden;
+}
+.hero-title .line { display: block; overflow: hidden; }
+.hero-title em {
+  font-style: italic;
+  background: linear-gradient(135deg, var(--accent) 0%, #7ab8ff 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.hero-sub {
+  color: var(--muted);
+  font-size: 1.05rem;
+  letter-spacing: 0.05em;
+  margin-top: 1.5rem;
+  text-align: center;
+  max-width: 420px;
+  line-height: 1.8;
+  position: relative; z-index: 2;
+}
+
+/* PHONE SCROLL SECTION */
+#phone-scroll {
+  position: relative;
+  height: 380vh;
+}
+#phone-sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.phone-img {
+  position: absolute;
+  width: clamp(220px, 28vw, 380px);
+  height: auto;
+  object-fit: contain;
+  will-change: transform, opacity;
+  filter: drop-shadow(0 40px 80px rgba(0,0,0,0.8));
+}
+#phone-front {
+  opacity: 1;
+  transform: translateY(0) rotateY(0deg) scale(1);
+}
+#phone-angle {
+  opacity: 0;
+  transform: translateY(30px) rotateY(-15deg) scale(0.9);
+}
+#phone-back {
+  opacity: 0;
+  transform: translateY(30px) rotateY(-30deg) scale(0.85);
+}
+.scroll-text {
+  position: absolute;
+  opacity: 0;
+  transform: translateY(20px);
+  color: var(--text);
+  max-width: 320px;
+}
+.scroll-text-left { left: 6%; text-align: left; }
+.scroll-text-right { right: 6%; text-align: right; }
+.scroll-text h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  margin-bottom: 0.8rem;
+  line-height: 1.2;
+}
+.scroll-text p { color: var(--muted); font-size: 0.95rem; line-height: 1.7; }
+
+/* PHONE GLOW */
+.phone-glow {
+  position: absolute;
+  width: 400px; height: 600px;
+  background: radial-gradient(ellipse, rgba(42,110,245,0.18) 0%, transparent 70%);
+  pointer-events: none;
+}
+
+/* FEATURES */
+#features {
+  padding: 120px 5% 80px;
+  background: linear-gradient(180deg, var(--bg) 0%, var(--bg2) 100%);
+}
+.section-label {
+  color: var(--accent);
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+.section-title {
+  font-family: 'Playfair Display', serif;
+  font-size: clamp(2rem, 5vw, 3.5rem);
+  font-weight: 700;
+  line-height: 1.15;
+  margin-bottom: 4rem;
+  max-width: 500px;
+}
+.features-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+}
+.feature-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 2rem;
+  position: relative;
+  overflow: hidden;
+  transition: border-color 0.4s, transform 0.4s;
+  will-change: transform;
+}
+.feature-card::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top left, rgba(42,110,245,0.08), transparent 60%);
+  opacity: 0;
+  transition: opacity 0.4s;
+}
+.feature-card:hover { border-color: rgba(42,110,245,0.4); transform: translateY(-4px); }
+.feature-card:hover::before { opacity: 1; }
+.feat-icon {
+  width: 48px; height: 48px;
+  background: rgba(42,110,245,0.15);
+  border-radius: 12px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+}
+.feat-counter {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.8rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #f0f4ff, var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  line-height: 1;
+  margin-bottom: 0.4rem;
+}
+.feat-counter span { font-size: 1.2rem; }
+.feature-card h4 {
+  font-weight: 500;
+  font-size: 1rem;
+  margin-bottom: 0.5rem;
+}
+.feature-card p { color: var(--muted); font-size: 0.85rem; line-height: 1.7; }
+
+/* CAMERA */
+#camera {
+  padding: 100px 5%;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6rem;
+  align-items: center;
+  background: linear-gradient(135deg, var(--bg2) 0%, var(--bg3) 100%);
+}
+.cam-img-wrap {
+  position: relative;
+  overflow: hidden;
+  border-radius: 24px;
+}
+.cam-img-wrap img {
+  width: 100%;
+  display: block;
+  border-radius: 24px;
+  transform: scale(1.05);
+  transition: transform 0.8s ease;
+}
+.cam-img-wrap:hover img { transform: scale(1); }
+.cam-reveal {
+  clip-path: inset(100% 0 0 0);
+  transition: clip-path 0s;
+}
+.cam-text .section-title { margin-bottom: 1.5rem; }
+.cam-text p { color: var(--muted); line-height: 1.9; margin-bottom: 2rem; }
+.cam-specs { display: flex; gap: 2rem; }
+.cam-spec strong {
+  display: block;
+  font-family: 'Playfair Display', serif;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: var(--accent);
+}
+.cam-spec small { color: var(--muted); font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.1em; }
+
+/* COLORS */
+#colors {
+  padding: 100px 5%;
+  text-align: center;
+}
+.color-phone-wrap {
+  position: relative;
+  width: 260px;
+  height: 350px;
+  margin: 3rem auto;
+}
+.color-phone {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  object-fit: contain;
+  border-radius: 20px;
+  transition: opacity 0.5s ease, transform 0.5s ease;
+  filter: drop-shadow(0 30px 60px rgba(0,0,0,0.7));
+}
+.color-phone.hidden { opacity: 0; transform: scale(0.9); }
+.color-dots {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  margin-top: 2rem;
+}
+.cdot {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: none;
+  transition: transform 0.3s, border-color 0.3s;
+  position: relative;
+}
+.cdot.active { border-color: rgba(255,255,255,0.5); transform: scale(1.2); }
+.cdot::after {
+  content: '';
+  position: absolute; inset: 3px;
+  border-radius: 50%;
+  background: inherit;
+}
+.cdot-blue { background: #2855a0; }
+.cdot-black { background: #1a1a2e; }
+.cdot-silver { background: #8899aa; }
+.color-label {
+  font-size: 0.9rem;
+  color: var(--muted);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  margin-top: 1rem;
+}
+
+/* REVIEWS */
+#reviews {
+  padding: 100px 5%;
+  overflow: hidden;
+  background: var(--bg);
+}
+.marquee {
+  display: flex;
+  gap: 3rem;
+  align-items: center;
+  width: max-content;
+  animation: marquee 20s linear infinite;
+  margin-bottom: 4rem;
+  opacity: 0.4;
+}
+.marquee span {
+  font-size: 0.8rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+@keyframes marquee { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+.reviews-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 1.5rem;
+}
+.review-card {
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 1.8rem;
+  transition: border-color 0.3s;
+}
+.review-card:hover { border-color: rgba(42,110,245,0.3); }
+.stars { margin-bottom: 1rem; font-size: 1rem; letter-spacing: 2px; color: #f0c040; }
+.review-card p { color: var(--muted); font-size: 0.9rem; line-height: 1.8; margin-bottom: 1.2rem; }
+.reviewer { display: flex; align-items: center; gap: 0.8rem; }
+.reviewer-av {
+  width: 36px; height: 36px;
+  border-radius: 50%;
+  background: var(--accent);
+  display: flex; align-items: center; justify-content: center;
+  font-size: 0.85rem; font-weight: 500;
+  flex-shrink: 0;
+}
+.reviewer strong { font-size: 0.85rem; display: block; }
+.reviewer small { color: var(--muted); font-size: 0.75rem; }
+
+/* CTA */
+#cta {
+  padding: 120px 5%;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+.cta-bg {
+  position: absolute; inset: 0;
+  background: radial-gradient(ellipse at center bottom, rgba(42,110,245,0.15) 0%, transparent 65%);
+  pointer-events: none;
+}
+.cta-grid-lines {
+  position: absolute; inset: 0;
+  background-image:
+    linear-gradient(rgba(42,110,245,0.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(42,110,245,0.05) 1px, transparent 1px);
+  background-size: 80px 80px;
+  pointer-events: none;
+}
+#cta .section-title {
+  max-width: 680px;
+  margin: 0 auto 1rem;
+  font-size: clamp(2.5rem, 6vw, 5rem);
+}
+.price-wrap {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0.5rem;
+  margin: 2rem 0;
+}
+.price-old {
+  color: var(--muted);
+  font-size: 1.3rem;
+  text-decoration: line-through;
+}
+.price-new {
+  font-family: 'Playfair Display', serif;
+  font-size: 3.5rem;
+  font-weight: 900;
+  background: linear-gradient(135deg, #f0f4ff, var(--accent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+.cta-btns {
+  display: flex;
+  gap: 1rem;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 2rem;
+}
+.btn-primary {
+  background: var(--accent);
+  border: none; border-radius: 50px;
+  color: #fff; cursor: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem; font-weight: 500;
+  letter-spacing: 0.12em;
+  padding: 1rem 3rem;
+  text-transform: uppercase;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.btn-primary:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 60px var(--accent-glow);
+}
+.btn-secondary {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 50px;
+  color: var(--text); cursor: none;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.9rem; font-weight: 500;
+  letter-spacing: 0.1em;
+  padding: 1rem 2.5rem;
+  text-transform: uppercase;
+  transition: border-color 0.3s, background 0.3s;
+}
+.btn-secondary:hover {
+  border-color: var(--accent);
+  background: rgba(42,110,245,0.08);
+}
+.countdown {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  margin-top: 3rem;
+}
+.cd-block {
+  text-align: center;
+}
+.cd-num {
+  font-family: 'Playfair Display', serif;
+  font-size: 2rem;
+  font-weight: 700;
+  display: block;
+  color: var(--accent);
+}
+.cd-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.15em;
+  color: var(--muted);
+}
+
+/* FOOTER */
+footer {
+  padding: 3rem 5%;
+  border-top: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+footer p { color: var(--muted); font-size: 0.8rem; }
+.scroll-top {
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  color: var(--muted);
+  cursor: none;
+  font-size: 1.2rem;
+  width: 42px; height: 42px;
+  display: flex; align-items: center; justify-content: center;
+  transition: border-color 0.3s, color 0.3s;
+}
+.scroll-top:hover { border-color: var(--accent); color: var(--accent); }
+
+/* VIDEO SCROLL */
+#video-scroll {
+  position: relative;
+  height: 400vh;
+}
+#video-sticky {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+}
+#video-sticky video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+#video-scroll-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(10, 15, 30, 0.6) 0%,
+    transparent 20%,
+    transparent 80%,
+    rgba(10, 15, 30, 0.8) 100%
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+#video-scroll-hint {
+  position: absolute;
+  bottom: 2.5rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 3;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.6s ease;
+}
+#video-scroll-hint span {
+  color: var(--muted);
+  font-size: 0.7rem;
+  letter-spacing: 0.25em;
+  text-transform: uppercase;
+}
+#video-scroll-hint .scroll-line {
+  width: 1px;
+  height: 32px;
+  background: linear-gradient(180deg, var(--accent), transparent);
+  animation: scrollPulse 1.8s ease-in-out infinite;
+}
+@keyframes scrollPulse {
+  0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+  50% { opacity: 1; transform: scaleY(1); }
+}
+
+/* MOBILE */
+@media (max-width: 768px) {
+  #camera { grid-template-columns: 1fr; gap: 3rem; }
+  nav ul { display: none; }
+  .scroll-text { display: none; }
+  #phone-scroll { height: 250vh; }
+  #video-scroll { height: 300vh; }
+}
+
+/* DESKTOP - Visualização Total do Aparelho */
+@media (min-width: 769px) {
+  /* Evita que o vídeo vertical seja cortado em telas de proporção horizontal */
+  #video-sticky video {
+    object-fit: contain;
+  }
+  
+  /* Limita a altura das imagens pela altura da tela, evitando crop vertical em monitores ultrawide ou telas de notebook. O aspect ratio natural do aparelho é preservado com contain e width auto. */
+  .phone-img {
+    width: auto;
+    height: clamp(400px, 80vh, 900px);
+    max-width: 100%;
+  }
+
+  /* Efeito de profundidade recomendado pela diretriz UX */
+  #phone-sticky {
+    perspective: 1200px;
+  }
+}
+</style>
+</head>
+<body>
+
+<div id="cursor"></div>
+<div id="cursor-ring"></div>
+
+<!-- AGE GATE -->
+<div id="agegate">
+  <div class="ag-grid"></div>
+  <div class="logo-ag">NovaPHONE X</div>
+  <p>Você deve ser maior de idade para acessar este conteúdo.</p>
+  <input type="text" id="birthdate" placeholder="DD/MM/AAAA" maxlength="10"/>
+  <button class="btn-enter" onclick="checkAge()">Entrar →</button>
+</div>
+
+<!-- MAIN SITE -->
+<div id="site">
+
+<!-- NAV -->
+<nav>
+  <div class="logo">NX</div>
+  <ul>
+    <li><a href="#features">Specs</a></li>
+    <li><a href="#camera">Câmera</a></li>
+    <li><a href="#reviews">Reviews</a></li>
+    <li><a href="#cta" class="nav-cta">Comprar</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section id="hero">
+  <div class="hero-bg-glow"></div>
+  <h1 class="hero-title">
+    <span class="line">O futuro</span>
+    <span class="line"><em>cabe na</em></span>
+    <span class="line">sua mão.</span>
+  </h1>
+  <p class="hero-sub">Performance de nível cinematográfico, design que define tendências. Conheça o NovaPHONE X.</p>
+</section>
+
+<!-- VIDEO SCROLL SECTION -->
+<section id="video-scroll">
+  <div id="video-sticky">
+    <div id="video-scroll-overlay"></div>
+    <video id="scroll-video" playsinline muted preload="auto">
+      <source src="pixverse_mp4_media_web_ori_e76bb143-c11e-4605-b08d-e8c9dfb431fd_seed1232584905.mp4" type="video/mp4"/>
+    </video>
+    <div id="video-scroll-hint">
+      <span>Scroll para explorar</span>
+      <div class="scroll-line"></div>
+    </div>
+  </div>
+</section>
+
+<!-- PHONE SCROLL SECTION -->
+<section id="phone-scroll">
+  <div id="phone-sticky">
+    <div class="phone-glow"></div>
+
+    <!-- Three phone images -->
+    <img id="phone-front" class="phone-img" src="/mnt/user-data/uploads/download.jpg" alt="NovaPHONE X frontal"/>
+    <img id="phone-angle" class="phone-img" src="/mnt/user-data/uploads/download__1_.jpg" alt="NovaPHONE X angular"/>
+    <img id="phone-back" class="phone-img" src="/mnt/user-data/uploads/download__2_.jpg" alt="NovaPHONE X traseira"/>
+
+    <!-- TEXT PANELS -->
+    <div class="scroll-text scroll-text-left" id="text1">
+      <h3>Design que respira elegância</h3>
+      <p>Cada curva, cada ângulo calculado com precisão cirúrgica para uma ergonomia perfeita.</p>
+    </div>
+    <div class="scroll-text scroll-text-right" id="text2">
+      <h3>Visão periférica expandida</h3>
+      <p>Molduras invisíveis. Tela que vai de borda a borda. 6.7" AMOLED 120Hz ProMotion.</p>
+    </div>
+    <div class="scroll-text scroll-text-left" id="text3">
+      <h3>Sistema de câmera tripla</h3>
+      <p>50MP principal, 12MP ultra-wide, zoom óptico 3x. Fotografia computacional de nova geração.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FEATURES -->
+<section id="features">
+  <p class="section-label">Especificações</p>
+  <h2 class="section-title">Engenharia sem compromisso.</h2>
+  <div class="features-grid">
+    <div class="feature-card">
+      <div class="feat-icon">📷</div>
+      <div class="feat-counter"><span id="c1">0</span><span>MP</span></div>
+      <h4>Câmera Principal</h4>
+      <p>Sensor de 50 megapixels com abertura f/1.7 e OIS de 5 eixos.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">⚡</div>
+      <div class="feat-counter"><span id="c2">0</span><span>mAh</span></div>
+      <h4>Bateria</h4>
+      <p>Carga rápida de 100W. De 0 a 100% em apenas 25 minutos.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">🖥</div>
+      <div class="feat-counter"><span id="c3">0</span><span>Hz</span></div>
+      <h4>Taxa de Atualização</h4>
+      <p>Display AMOLED 6.7" com ProMotion adaptativo de 1 a 120Hz.</p>
+    </div>
+    <div class="feature-card">
+      <div class="feat-icon">🧠</div>
+      <div class="feat-counter"><span id="c4">0</span><span>nm</span></div>
+      <h4>Processo</h4>
+      <p>Chip A17 Ultra fabricado em processo de 3nm com NPU dedicada.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CAMERA -->
+<section id="camera">
+  <div class="cam-img-wrap">
+    <img class="cam-reveal" src="/mnt/user-data/uploads/download__2_.jpg" alt="Sistema de câmera"/>
+  </div>
+  <div class="cam-text">
+    <p class="section-label">Sistema de câmera</p>
+    <h2 class="section-title">Cada foto, uma obra de arte.</h2>
+    <p>O sistema de câmera tripla do NovaPHONE X redefine o que é possível em fotografia mobile. Inteligência artificial em cada clique, para que cada momento seja perfeito.</p>
+    <div class="cam-specs">
+      <div class="cam-spec">
+        <strong>50MP</strong>
+        <small>Principal</small>
+      </div>
+      <div class="cam-spec">
+        <strong>12MP</strong>
+        <small>Ultra-Wide</small>
+      </div>
+      <div class="cam-spec">
+        <strong>3×</strong>
+        <small>Zoom Óptico</small>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COLORS -->
+<section id="colors">
+  <p class="section-label">Cores</p>
+  <h2 class="section-title" style="max-width:none;">Escolha o seu.</h2>
+
+  <div class="color-phone-wrap">
+    <img class="color-phone" id="cp-blue" src="/mnt/user-data/uploads/download__2_.jpg" alt="Azul"/>
+    <img class="color-phone hidden" id="cp-black" src="/mnt/user-data/uploads/download.jpg" alt="Preto"/>
+    <img class="color-phone hidden" id="cp-silver" src="/mnt/user-data/uploads/download__1_.jpg" alt="Prata"/>
+  </div>
+
+  <div class="color-dots">
+    <button class="cdot cdot-blue active" onclick="setColor('blue')" aria-label="Azul Profundo"></button>
+    <button class="cdot cdot-black" onclick="setColor('black')" aria-label="Negro Obsidiana"></button>
+    <button class="cdot cdot-silver" onclick="setColor('silver')" aria-label="Prata Estelar"></button>
+  </div>
+  <p class="color-label" id="color-name">Azul Profundo</p>
+</section>
+
+<!-- REVIEWS -->
+<section id="reviews">
+  <p class="section-label">O que dizem</p>
+  <h2 class="section-title">Aprovado por quem entende.</h2>
+
+  <div class="marquee">
+    <span>TechRadar</span><span>·</span>
+    <span>GSMArena</span><span>·</span>
+    <span>The Verge</span><span>·</span>
+    <span>Engadget</span><span>·</span>
+    <span>9to5Mac</span><span>·</span>
+    <span>AndroidAuthority</span><span>·</span>
+    <span>TechRadar</span><span>·</span>
+    <span>GSMArena</span><span>·</span>
+    <span>The Verge</span><span>·</span>
+    <span>Engadget</span><span>·</span>
+    <span>9to5Mac</span><span>·</span>
+    <span>AndroidAuthority</span><span>·</span>
+  </div>
+
+  <div class="reviews-grid">
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p>"A câmera é simplesmente surreal. Fotos noturnas de nível profissional direto do bolso. Mudou minha relação com a fotografia."</p>
+      <div class="reviewer">
+        <div class="reviewer-av">MC</div>
+        <div><strong>Marina Cardoso</strong><small>Fotógrafa</small></div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p>"A bateria dura o dia inteiro mesmo sob uso intenso. E quando precisa carregar, são menos de 30 minutos. Absurdo."</p>
+      <div class="reviewer">
+        <div class="reviewer-av">RP</div>
+        <div><strong>Rafael Pereira</strong><small>Dev Mobile</small></div>
+      </div>
+    </div>
+    <div class="review-card">
+      <div class="stars">★★★★★</div>
+      <p>"Design que premia as mãos. Acabamento premium, leve e equilibrado. Nunca me cansei de olhar para ele."</p>
+      <div class="reviewer">
+        <div class="reviewer-av">LS</div>
+        <div><strong>Laura Santos</strong><small>Designer UX</small></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section id="cta">
+  <div class="cta-bg"></div>
+  <div class="cta-grid-lines"></div>
+  <p class="section-label">Oferta de lançamento</p>
+  <h2 class="section-title">Pronto para o <em style="font-style:italic">futuro</em>?</h2>
+  <p style="color:var(--muted);max-width:480px;margin:0 auto;line-height:1.8;">Edição limitada de lançamento. Frete grátis para todo o Brasil. Garantia estendida de 2 anos.</p>
+
+  <div class="price-wrap">
+    <span class="price-old">R$ 6.999</span>
+    <span class="price-new">R$ 5.499</span>
+  </div>
+
+  <div class="cta-btns">
+    <button class="btn-primary">Comprar Agora</button>
+    <button class="btn-secondary">Conhecer Mais</button>
+  </div>
+
+  <div class="countdown">
+    <div class="cd-block">
+      <span class="cd-num" id="cd-h">00</span>
+      <span class="cd-label">Horas</span>
+    </div>
+    <div class="cd-block"><span class="cd-num" style="color:var(--muted)">:</span></div>
+    <div class="cd-block">
+      <span class="cd-num" id="cd-m">00</span>
+      <span class="cd-label">Minutos</span>
+    </div>
+    <div class="cd-block"><span class="cd-num" style="color:var(--muted)">:</span></div>
+    <div class="cd-block">
+      <span class="cd-num" id="cd-s">00</span>
+      <span class="cd-label">Segundos</span>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">NX</div>
+  <p>© 2026 NovaPHONE X. Todos os direitos reservados.</p>
+  <button class="scroll-top" onclick="window.scrollTo({top:0,behavior:'smooth'})">↑</button>
+</footer>
+
+</div><!-- end #site -->
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script>
+gsap.registerPlugin(ScrollTrigger);
+
+/* ─── CUSTOM CURSOR ─── */
+const cursor = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursor-ring');
+let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
+
+document.addEventListener('mousemove', e => {
+  mouseX = e.clientX; mouseY = e.clientY;
+  cursor.style.transform = `translate(${mouseX - 6}px, ${mouseY - 6}px)`;
+});
+
+function animateCursorRing() {
+  ringX += (mouseX - ringX) * 0.12;
+  ringY += (mouseY - ringY) * 0.12;
+  cursorRing.style.transform = `translate(${ringX - 20}px, ${ringY - 20}px)`;
+  requestAnimationFrame(animateCursorRing);
+}
+animateCursorRing();
+
+/* ─── BIRTHDATE MASK ─── */
+const bd = document.getElementById('birthdate');
+bd.addEventListener('input', e => {
+  let v = e.target.value.replace(/\D/g, '');
+  if (v.length >= 2) v = v.slice(0,2) + '/' + v.slice(2);
+  if (v.length >= 5) v = v.slice(0,5) + '/' + v.slice(5);
+  e.target.value = v.slice(0, 10);
+});
+
+/* ─── AGEGATE ─── */
+function checkAge() {
+  const val = bd.value;
+  const parts = val.split('/');
+  if (parts.length !== 3 || parts[2].length < 4) { shake(); return; }
+  const birth = new Date(+parts[2], +parts[1]-1, +parts[0]);
+  const age = (Date.now() - birth) / (365.25*24*3600*1000);
+  if (age < 18) { bd.style.borderColor = '#e05'; setTimeout(()=>bd.style.borderColor='',1500); return; }
+  sessionStorage.setItem('ageVerified', '1');
+  revealSite();
+}
+
+function shake() {
+  gsap.to('#agegate input', {x:10,duration:0.05,repeat:5,yoyo:true,onComplete:()=>gsap.set('#agegate input',{x:0})});
+}
+
+function revealSite() {
+  const tl = gsap.timeline();
+  tl.to('#agegate', {opacity:0, scale:1.05, duration:0.7, ease:'power2.in'})
+    .set('#agegate', {display:'none'})
+    .to('#site', {opacity:1, duration:0.6, ease:'power2.out'})
+    .call(initAnimations);
+}
+
+/* Skip agegate if already verified */
+if (sessionStorage.getItem('ageVerified')) {
+  document.getElementById('agegate').style.display = 'none';
+  document.getElementById('site').style.opacity = '1';
+  initAnimations();
+}
+
+/* ─── MAIN ANIMATIONS ─── */
+function initAnimations() {
+  /* NAV fade */
+  gsap.from('nav', {y:-60, opacity:0, duration:0.8, ease:'power2.out'});
+
+  /* HERO title stagger */
+  gsap.from('.hero-title .line', {
+    y: 80, opacity: 0, duration: 1.1, stagger: 0.15,
+    ease: 'power3.out', delay: 0.2
+  });
+  gsap.from('.hero-sub', { opacity:0, y:30, duration:0.9, delay:0.8, ease:'power2.out' });
+
+  /* ─── VIDEO SCROLL SECTION ─── */
+  const scrollVideo = document.getElementById('scroll-video');
+  const videoHint = document.getElementById('video-scroll-hint');
+
+  if (scrollVideo) {
+    const initVideoScroll = () => {
+      const duration = scrollVideo.duration;
+      if (!duration || isNaN(duration)) return;
+
+      // Show hint initially, fade out on scroll
+      gsap.set(videoHint, { opacity: 1 });
+
+      // Proxy object for smooth interpolation
+      const videoProxy = { time: 0 };
+      let rafId = null;
+
+      function updateVideoTime() {
+        if (Math.abs(scrollVideo.currentTime - videoProxy.time) > 0.01) {
+          scrollVideo.currentTime = videoProxy.time;
+        }
+        rafId = null;
+      }
+
+      gsap.to(videoProxy, {
+        time: duration,
+        ease: 'none',
+        scrollTrigger: {
+          trigger: '#video-scroll',
+          start: 'top top',
+          end: 'bottom bottom',
+          scrub: 1,
+          onUpdate: () => {
+            if (!rafId) {
+              rafId = requestAnimationFrame(updateVideoTime);
+            }
+          },
+          onEnter: () => gsap.to(videoHint, { opacity: 0, duration: 0.4 }),
+          onEnterBack: () => gsap.to(videoHint, { opacity: 0, duration: 0.4 }),
+          onLeave: () => gsap.to(videoHint, { opacity: 0, duration: 0.2 }),
+          onLeaveBack: () => gsap.to(videoHint, { opacity: 1, duration: 0.6, delay: 0.3 }),
+        },
+      });
+    };
+
+    if (scrollVideo.readyState >= 1) {
+      initVideoScroll();
+    } else {
+      scrollVideo.addEventListener('loadedmetadata', initVideoScroll, { once: true });
+    }
+  }
+
+  /* ─── PHONE SCROLL SECTION ─── */
+  const phoneScroll = document.getElementById('phone-scroll');
+  const front = document.getElementById('phone-front');
+  const angle = document.getElementById('phone-angle');
+  const back = document.getElementById('phone-back');
+  const t1 = document.getElementById('text1');
+  const t2 = document.getElementById('text2');
+  const t3 = document.getElementById('text3');
+
+  /* Floating animation on the first phone */
+  gsap.to(front, {
+    y: -18,
+    duration: 2.8,
+    repeat: -1,
+    yoyo: true,
+    ease: 'sine.inOut'
+  });
+
+  const phoneTimeline = gsap.timeline({
+    scrollTrigger: {
+      trigger: '#phone-scroll',
+      start: 'top top',
+      end: 'bottom bottom',
+      scrub: 1.2,
+      pin: false,
+    }
+  });
+
+  /* Phase 0→0.3 — front phone visible, text1 in */
+  phoneTimeline
+    .to(t1, { opacity:1, y:0, duration:0.15 }, 0)
+
+    /* Phase 0.3→0.5 — transition front → angle */
+    .to(front, { opacity:0, rotateY:15, scale:0.88, duration:0.2 }, 0.25)
+    .to(t1, { opacity:0, y:-15, duration:0.1 }, 0.25)
+    .to(angle, { opacity:1, y:0, rotateY:0, scale:1, duration:0.2 }, 0.38)
+    .to(t2, { opacity:1, y:0, duration:0.15 }, 0.42)
+
+    /* Phase 0.6→0.8 — transition angle → back */
+    .to(angle, { opacity:0, rotateY:20, scale:0.88, duration:0.2 }, 0.62)
+    .to(t2, { opacity:0, y:-15, duration:0.1 }, 0.62)
+    .to(back, { opacity:1, y:0, rotateY:0, scale:1, duration:0.2 }, 0.72)
+    .to(t3, { opacity:1, y:0, duration:0.15 }, 0.76)
+
+    /* Hold back at end */
+    .to(t3, { opacity:0.8, duration:0.1 }, 0.92);
+
+  /* ─── FEATURE CARDS ─── */
+  gsap.from('.feature-card', {
+    scrollTrigger: { trigger: '#features', start: 'top 75%' },
+    y: 50, opacity: 0, stagger: 0.12, duration: 0.8, ease: 'power2.out'
+  });
+
+  /* Counters */
+  const counters = [
+    { el: document.getElementById('c1'), target: 50 },
+    { el: document.getElementById('c2'), target: 5000 },
+    { el: document.getElementById('c3'), target: 120 },
+    { el: document.getElementById('c4'), target: 3 },
+  ];
+
+  ScrollTrigger.create({
+    trigger: '#features',
+    start: 'top 70%',
+    onEnter: () => {
+      counters.forEach(({ el, target }) => {
+        let obj = { val: 0 };
+        gsap.to(obj, {
+          val: target,
+          duration: 1.8,
+          ease: 'power2.out',
+          onUpdate: () => { el.textContent = Math.round(obj.val).toLocaleString('pt-BR'); }
+        });
+      });
+    },
+    once: true
+  });
+
+  /* ─── CAMERA SECTION ─── */
+  ScrollTrigger.create({
+    trigger: '#camera',
+    start: 'top 70%',
+    onEnter: () => {
+      gsap.to('.cam-reveal', {
+        clipPath: 'inset(0% 0 0 0)',
+        duration: 1.2,
+        ease: 'power3.out'
+      });
+    },
+    once: true
+  });
+
+  gsap.from('.cam-text .section-label, .cam-text .section-title, .cam-text p, .cam-specs', {
+    scrollTrigger: { trigger: '#camera', start: 'top 70%' },
+    x: 40, opacity: 0, stagger: 0.12, duration: 0.9, ease: 'power2.out'
+  });
+
+  /* ─── COLOR SECTION ─── */
+  gsap.from('#colors .color-phone-wrap', {
+    scrollTrigger: { trigger: '#colors', start: 'top 75%' },
+    y: 60, opacity: 0, duration: 1, ease: 'power2.out'
+  });
+
+  /* ─── REVIEWS ─── */
+  gsap.from('.review-card', {
+    scrollTrigger: { trigger: '#reviews', start: 'top 75%' },
+    y: 40, opacity: 0, stagger: 0.1, duration: 0.7, ease: 'power2.out'
+  });
+
+  /* ─── CTA ─── */
+  gsap.from(['#cta .section-label','#cta .section-title','#cta p','#cta .price-wrap','.cta-btns','.countdown'], {
+    scrollTrigger: { trigger: '#cta', start: 'top 70%' },
+    y: 40, opacity: 0, stagger: 0.1, duration: 0.8, ease: 'power2.out'
+  });
+}
+
+/* ─── COLOR PICKER ─── */
+const colorData = {
+  blue:   { img: 'cp-blue',   name: 'Azul Profundo' },
+  black:  { img: 'cp-black',  name: 'Negro Obsidiana' },
+  silver: { img: 'cp-silver', name: 'Prata Estelar' },
+};
+
+function setColor(key) {
+  Object.keys(colorData).forEach(k => {
+    const imgEl = document.getElementById(colorData[k].img);
+    imgEl.classList.toggle('hidden', k !== key);
+  });
+  document.querySelectorAll('.cdot').forEach(d => d.classList.remove('active'));
+  document.querySelector('.cdot-' + key).classList.add('active');
+  document.getElementById('color-name').textContent = colorData[key].name;
+}
+
+/* ─── COUNTDOWN ─── */
+function updateCountdown() {
+  const end = new Date();
+  end.setHours(23, 59, 59, 0);
+  const diff = end - Date.now();
+  const h = Math.floor(diff / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  document.getElementById('cd-h').textContent = String(h).padStart(2,'0');
+  document.getElementById('cd-m').textContent = String(m).padStart(2,'0');
+  document.getElementById('cd-s').textContent = String(s).padStart(2,'0');
+}
+setInterval(updateCountdown, 1000);
+updateCountdown();
+</script>
+</body>
+</html>
