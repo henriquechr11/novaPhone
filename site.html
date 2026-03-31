@@ -627,7 +627,7 @@ footer p { color: var(--muted); font-size: 0.8rem; }
   display: flex;
   align-items: center;
   justify-content: center;
-  background: #000;
+  background: var(--bg);
 }
 #video-sticky video {
   width: 100%;
@@ -689,9 +689,9 @@ footer p { color: var(--muted); font-size: 0.8rem; }
 
 /* DESKTOP - Visualização Total do Aparelho */
 @media (min-width: 769px) {
-  /* Evita que o vídeo vertical seja cortado em telas de proporção horizontal */
+  /* O vídeo cobre a tela toda para destacar o aparelho */
   #video-sticky video {
-    object-fit: contain;
+    object-fit: cover;
   }
   
   /* Limita a altura das imagens pela altura da tela, evitando crop vertical em monitores ultrawide ou telas de notebook. O aspect ratio natural do aparelho é preservado com contain e width auto. */
@@ -1057,7 +1057,7 @@ function initAnimations() {
 
       gsap.to(videoProxy, {
         time: duration,
-        ease: 'none',
+        ease: 'power2.out',
         scrollTrigger: {
           trigger: '#video-scroll',
           start: 'top top',
