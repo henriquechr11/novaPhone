@@ -26,29 +26,8 @@ body {
   color: var(--text);
   font-family: 'DM Sans', sans-serif;
   overflow-x: hidden;
-  cursor: none;
 }
 
-/* CUSTOM CURSOR */
-#cursor {
-  width: 12px; height: 12px;
-  border-radius: 50%;
-  background: var(--accent);
-  position: fixed; top: 0; left: 0;
-  pointer-events: none;
-  z-index: 9999;
-  mix-blend-mode: screen;
-  transition: transform 0.15s ease;
-}
-#cursor-ring {
-  width: 40px; height: 40px;
-  border-radius: 50%;
-  border: 1px solid rgba(42,110,245,0.5);
-  position: fixed; top: 0; left: 0;
-  pointer-events: none;
-  z-index: 9998;
-  transition: transform 0.4s cubic-bezier(0.23,1,0.32,1);
-}
 
 /* AGEGATE */
 #agegate {
@@ -96,8 +75,6 @@ body {
 .btn-enter {
   background: var(--accent);
   border: none; border-radius: 50px;
-  color: #fff;
-  cursor: none;
   font-family: 'DM Sans', sans-serif;
   font-size: 0.85rem;
   font-weight: 500;
@@ -412,7 +389,6 @@ nav ul a:hover { color: var(--text); }
   width: 28px; height: 28px;
   border-radius: 50%;
   border: 2px solid transparent;
-  cursor: none;
   transition: transform 0.3s, border-color 0.3s;
   position: relative;
 }
@@ -538,7 +514,7 @@ nav ul a:hover { color: var(--text); }
 .btn-primary {
   background: var(--accent);
   border: none; border-radius: 50px;
-  color: #fff; cursor: none;
+  color: #fff;
   font-family: 'DM Sans', sans-serif;
   font-size: 0.9rem; font-weight: 500;
   letter-spacing: 0.12em;
@@ -554,7 +530,7 @@ nav ul a:hover { color: var(--text); }
   background: transparent;
   border: 1px solid var(--border);
   border-radius: 50px;
-  color: var(--text); cursor: none;
+  color: var(--text);
   font-family: 'DM Sans', sans-serif;
   font-size: 0.9rem; font-weight: 500;
   letter-spacing: 0.1em;
@@ -605,7 +581,6 @@ footer p { color: var(--muted); font-size: 0.8rem; }
   border: 1px solid var(--border);
   border-radius: 50%;
   color: var(--muted);
-  cursor: none;
   font-size: 1.2rem;
   width: 42px; height: 42px;
   display: flex; align-items: center; justify-content: center;
@@ -632,7 +607,7 @@ footer p { color: var(--muted); font-size: 0.8rem; }
 #video-sticky video {
   width: 100%;
   height: 100%;
-  object-fit: cover;
+  object-fit: contain;
   display: block;
 }
 #video-scroll-overlay {
@@ -689,9 +664,9 @@ footer p { color: var(--muted); font-size: 0.8rem; }
 
 /* DESKTOP - Visualização Total do Aparelho */
 @media (min-width: 769px) {
-  /* O vídeo cobre a tela toda para destacar o aparelho */
+  /* Para evitar cortar o aparelho, mantemos o aspect ratio */
   #video-sticky video {
-    object-fit: cover;
+    object-fit: contain;
   }
   
   /* Limita a altura das imagens pela altura da tela, evitando crop vertical em monitores ultrawide ou telas de notebook. O aspect ratio natural do aparelho é preservado com contain e width auto. */
@@ -710,8 +685,6 @@ footer p { color: var(--muted); font-size: 0.8rem; }
 </head>
 <body>
 
-<div id="cursor"></div>
-<div id="cursor-ring"></div>
 
 <!-- AGE GATE -->
 <div id="agegate">
@@ -752,7 +725,7 @@ footer p { color: var(--muted); font-size: 0.8rem; }
   <div id="video-sticky">
     <div id="video-scroll-overlay"></div>
     <video id="scroll-video" playsinline muted preload="auto">
-      <source src="pixverse_mp4_media_web_ori_e76bb143-c11e-4605-b08d-e8c9dfb431fd_seed1232584905.mp4" type="video/mp4"/>
+      <source src="midia/vc.mp4" type="video/mp4"/>
     </video>
     <div id="video-scroll-hint">
       <span>Scroll para explorar</span>
@@ -767,9 +740,9 @@ footer p { color: var(--muted); font-size: 0.8rem; }
     <div class="phone-glow"></div>
 
     <!-- Three phone images -->
-    <img id="phone-front" class="phone-img" src="/mnt/user-data/uploads/download.jpg" alt="NovaPHONE X frontal"/>
-    <img id="phone-angle" class="phone-img" src="/mnt/user-data/uploads/download__1_.jpg" alt="NovaPHONE X angular"/>
-    <img id="phone-back" class="phone-img" src="/mnt/user-data/uploads/download__2_.jpg" alt="NovaPHONE X traseira"/>
+    <img id="phone-front" class="phone-img" src="midia/download-removebg-preview.png" alt="NovaPHONE X frontal"/>
+    <img id="phone-angle" class="phone-img" src="midia/download__1_-removebg-preview.png" alt="NovaPHONE X angular"/>
+    <img id="phone-back" class="phone-img" src="midia/download__2_-removebg-preview.png" alt="NovaPHONE X traseira"/>
 
     <!-- TEXT PANELS -->
     <div class="scroll-text scroll-text-left" id="text1">
@@ -822,7 +795,7 @@ footer p { color: var(--muted); font-size: 0.8rem; }
 <!-- CAMERA -->
 <section id="camera">
   <div class="cam-img-wrap">
-    <img class="cam-reveal" src="/mnt/user-data/uploads/download__2_.jpg" alt="Sistema de câmera"/>
+    <img class="cam-reveal" src="midia/download (2).jpg" alt="Sistema de câmera"/>
   </div>
   <div class="cam-text">
     <p class="section-label">Sistema de câmera</p>
@@ -851,9 +824,9 @@ footer p { color: var(--muted); font-size: 0.8rem; }
   <h2 class="section-title" style="max-width:none;">Escolha o seu.</h2>
 
   <div class="color-phone-wrap">
-    <img class="color-phone" id="cp-blue" src="/mnt/user-data/uploads/download__2_.jpg" alt="Azul"/>
-    <img class="color-phone hidden" id="cp-black" src="/mnt/user-data/uploads/download.jpg" alt="Preto"/>
-    <img class="color-phone hidden" id="cp-silver" src="/mnt/user-data/uploads/download__1_.jpg" alt="Prata"/>
+    <img class="color-phone" id="cp-blue" src="midia/download (2).jpg" alt="Azul"/>
+    <img class="color-phone hidden" id="cp-black" src="midia/download.jpg" alt="Preto"/>
+    <img class="color-phone hidden" id="cp-silver" src="midia/download (1).jpg" alt="Prata"/>
   </div>
 
   <div class="color-dots">
@@ -962,23 +935,6 @@ footer p { color: var(--muted); font-size: 0.8rem; }
 <script>
 gsap.registerPlugin(ScrollTrigger);
 
-/* ─── CUSTOM CURSOR ─── */
-const cursor = document.getElementById('cursor');
-const cursorRing = document.getElementById('cursor-ring');
-let mouseX = 0, mouseY = 0, ringX = 0, ringY = 0;
-
-document.addEventListener('mousemove', e => {
-  mouseX = e.clientX; mouseY = e.clientY;
-  cursor.style.transform = `translate(${mouseX - 6}px, ${mouseY - 6}px)`;
-});
-
-function animateCursorRing() {
-  ringX += (mouseX - ringX) * 0.12;
-  ringY += (mouseY - ringY) * 0.12;
-  cursorRing.style.transform = `translate(${ringX - 20}px, ${ringY - 20}px)`;
-  requestAnimationFrame(animateCursorRing);
-}
-animateCursorRing();
 
 /* ─── BIRTHDATE MASK ─── */
 const bd = document.getElementById('birthdate');
@@ -1049,10 +1005,21 @@ function initAnimations() {
       let rafId = null;
 
       function updateVideoTime() {
-        if (Math.abs(scrollVideo.currentTime - videoProxy.time) > 0.01) {
+        let diff = videoProxy.time - scrollVideo.currentTime;
+        if (Math.abs(diff) > 0.01) {
+          // Limite de velocidade máxima (ex: 0.07 segundos de vídeo por frame)
+          const MAX_SPEED = 0.07;
+          if (Math.abs(diff) > MAX_SPEED) {
+            diff = Math.sign(diff) * MAX_SPEED;
+          }
+          scrollVideo.currentTime += diff;
+          
+          // Continua chamando o requestAnimationFrame até alcançar o tempo alvo
+          rafId = requestAnimationFrame(updateVideoTime);
+        } else {
           scrollVideo.currentTime = videoProxy.time;
+          rafId = null;
         }
-        rafId = null;
       }
 
       gsap.to(videoProxy, {
@@ -1062,7 +1029,7 @@ function initAnimations() {
           trigger: '#video-scroll',
           start: 'top top',
           end: 'bottom bottom',
-          scrub: 1,
+          scrub: 0.5,
           onUpdate: () => {
             if (!rafId) {
               rafId = requestAnimationFrame(updateVideoTime);
